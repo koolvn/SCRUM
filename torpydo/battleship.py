@@ -116,12 +116,10 @@ def parse_position(position: str):
     """ Проверяет позицию """
     # TODO: Нельзя стрелять дважды в одну и ту же клетку
     # TODO: Показывать выбранную клетку на карте
-    if len(position) != 2 or not position[0].isalpha() or not position[1].isdigit():
-        print('Sorry but you have to input only two symbols,'
-              ' so the position should contain column LETTER and row NUMBER. E.g. A5\n')
-        position = parse_position(input('Please try again:\n'))
-    letter = Letter[position.upper()[:1]]
-    number = int(position[1:])
+    position = GameController.validate_position(position)
+
+    letter = Letter[position.upper()[0]]
+    number = int(position[1])
     position = Position(letter, number)
 
     return position

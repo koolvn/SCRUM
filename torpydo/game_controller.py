@@ -37,3 +37,17 @@ class GameController(object):
         position = Position(letter, number)
 
         return position
+
+    def validate_position(position):
+        while True:
+            if position.upper()[0] not in Letter._member_names_:
+                print('Sorry this LETTER is not available in this game.\n')
+                position = input('Please try again:\n')
+
+            elif len(position) != 2 or not position[0].isalpha() or not position[1].isdigit():
+                print('Sorry but you have to input only two symbols,'
+                      ' so the position should contain column LETTER and row NUMBER. E.g. A5\n')
+                position = input('Please try again:\n')
+            else:
+                break
+        return position
