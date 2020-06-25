@@ -4,6 +4,7 @@ from torpydo.ship import Color, Letter, Position, Ship
 
 
 class GameController(object):
+    @staticmethod
     def check_is_hit(ships: list, shot: Position):
         if ships is None:
             raise ValueError('ships is null')
@@ -18,6 +19,7 @@ class GameController(object):
 
         return False
 
+    @staticmethod
     def initialize_ships():
         return [
             Ship("Aircraft Carrier", 5, Color.CADET_BLUE),
@@ -26,11 +28,13 @@ class GameController(object):
             Ship("Destroyer", 3, Color.YELLOW),
             Ship("Patrol Boat", 2, Color.ORANGE)]
 
+    @staticmethod
     def is_ship_valid(ship: Ship):
         is_valid = len(ship.positions) == ship.size
 
         return is_valid
 
+    @staticmethod
     def get_random_position(size: int):
         letter = random.choice(list(Letter))
         number = random.randrange(size)
@@ -38,16 +42,17 @@ class GameController(object):
 
         return position
 
-    def validate_position(position):
+    @staticmethod
+    def validate_position(pos):
         while True:
-            if position.upper()[0] not in Letter._member_names_:
+            if pos.upper()[0] not in Letter.member_names_:
                 print('Sorry this LETTER is not available in this game.\n')
-                position = input('Please try again:\n')
+                pos = input('Please try again:\n')
 
-            elif len(position) != 2 or not position[0].isalpha() or not position[1].isdigit():
+            elif len(pos) != 2 or not pos[0].isalpha() or not pos[1].isdigit():
                 print('Sorry but you have to input only two symbols,'
                       ' so the position should contain column LETTER and row NUMBER. E.g. A5\n')
-                position = input('Please try again:\n')
+                pos = input('Please try again:\n')
             else:
                 break
-        return position
+        return pos

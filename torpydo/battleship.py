@@ -173,31 +173,23 @@ def initialize_enemyFleet():
     # TODO: Корабли противника должны выставлятся случайным образом
     # TODO: Докстринг
     global enemyFleet
+    import numpy as np
+    col_mapper = {'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8}
+    ivn_col_mapper = {v: k for k, v in col_mapper.items()}
+
+    def add_ship_position(size: int, ship=Ship) -> None:
+        for i in range(size):
+            col_letter = lambda x: ivn_col_mapper[np.random.randint(1, 9, x)[0]]
+            row_num = lambda x: np.random.randint(1, 9, x)[0]
+            rand_col = Letter.__dict__['_member_map_'][col_letter(1)]
+            rand_row = row_num(1)
+            ship.positions.append(Position(rand_col, rand_row))
+        return None
 
     enemyFleet = GameController.initialize_ships()
+    [add_ship_position(ship.size, ship) for ship in enemyFleet]
 
-    enemyFleet[0].positions.append(Position(Letter.B, 4))
-    enemyFleet[0].positions.append(Position(Letter.B, 5))
-    enemyFleet[0].positions.append(Position(Letter.B, 6))
-    enemyFleet[0].positions.append(Position(Letter.B, 7))
-    enemyFleet[0].positions.append(Position(Letter.B, 8))
-
-    enemyFleet[1].positions.append(Position(Letter.E, 6))
-    enemyFleet[1].positions.append(Position(Letter.E, 7))
-    enemyFleet[1].positions.append(Position(Letter.E, 8))
-    enemyFleet[1].positions.append(Position(Letter.E, 9))
-
-    enemyFleet[2].positions.append(Position(Letter.A, 3))
-    enemyFleet[2].positions.append(Position(Letter.B, 3))
-    enemyFleet[2].positions.append(Position(Letter.C, 3))
-
-    enemyFleet[3].positions.append(Position(Letter.F, 8))
-    enemyFleet[3].positions.append(Position(Letter.G, 8))
-    enemyFleet[3].positions.append(Position(Letter.H, 8))
-
-    enemyFleet[4].positions.append(Position(Letter.C, 5))
-    enemyFleet[4].positions.append(Position(Letter.C, 6))
-    print('DEBUG:', [(_ship.name, _ship.positions) for _ship in enemyFleet])
+    # print('DEBUG:', [(_ship.name, _ship.positions) for _ship in enemyFleet])
 
 
 if __name__ == '__main__':
